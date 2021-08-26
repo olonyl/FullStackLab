@@ -1,0 +1,43 @@
+﻿@model UrlShortener.Domain.Entities.Url
+
+
+<div class="row">
+    <div class="col m12">
+        <form asp-action="GenerateShortUrl" data-ajax-method="POST" data-ajax="true" data-ajax-update="#creatediv"
+              data-ajax-mode="replace" data-ajax-complete="onComplete">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col m8 offset-m2 center-align">
+                            <span class="card-title">Create a new short URL</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m6 offset-m2">
+                            <input asp-for="OriginalUrl" class="form-control" placeholder="Your original URL here" />
+                            <span asp-validation-for="OriginalUrl" class="text-danger"></span>
+                        </div>
+                        <div class="col m2">
+                            <button type="submit" class="btn">Shorten URL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function onComplete(data) {
+        $("OrginalUrl").val("");
+
+        $.ajax({
+            type:"GET",
+            url: '@Url.Action("ShowUrls", "Urls")',
+            success: function (data) { $("#urlList").html(data); }
+        });
+    }
+</script>

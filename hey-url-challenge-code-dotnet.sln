@@ -3,15 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.808.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hey-url-challenge-code-dotnet", "hey-url-challenge-code-dotnet\hey-url-challenge-code-dotnet.csproj", "{C673D8C3-FE4F-465C-9457-3A9E08ADE305}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hey-url-challenge-code-dotnet", "hey-url-challenge-code-dotnet\hey-url-challenge-code-dotnet.csproj", "{C673D8C3-FE4F-465C-9457-3A9E08ADE305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{5399632D-585A-4CA3-B9BE-A4C2559D6DEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{5399632D-585A-4CA3-B9BE-A4C2559D6DEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EEF9DBB3-847A-427F-98FE-E431729F938C}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
 		CHALLENGE.md = CHALLENGE.md
+		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1- Presentation", "1- Presentation", "{39B49484-CEC6-4651-96DF-68AFE1590A2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2- Application", "2- Application", "{95A3137E-C2C3-4D8A-AF06-90132F44829D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3- Domain", "3- Domain", "{DAB2C12C-B8E1-41E8-95C2-F96565AC3C70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4- Infrastructure", "4- Infrastructure", "{8FA252C9-F19B-4D9D-BE18-F0A93C3143C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Domain", "UrlShortener.Domain\UrlShortener.Domain.csproj", "{5072E11C-06EB-40FD-B4C0-6A1B39B1659E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Infrastructure", "UrlShortener.Infrastructure\UrlShortener.Infrastructure.csproj", "{D39F2BAA-F9A2-4F04-B2F6-265509ACB3CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Application", "UrlShortener.Application\UrlShortener.Application.csproj", "{0D85D50C-67CD-4FDA-AB71-CE44302A937B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +41,27 @@ Global
 		{5399632D-585A-4CA3-B9BE-A4C2559D6DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5399632D-585A-4CA3-B9BE-A4C2559D6DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5399632D-585A-4CA3-B9BE-A4C2559D6DEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5072E11C-06EB-40FD-B4C0-6A1B39B1659E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5072E11C-06EB-40FD-B4C0-6A1B39B1659E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5072E11C-06EB-40FD-B4C0-6A1B39B1659E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5072E11C-06EB-40FD-B4C0-6A1B39B1659E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D39F2BAA-F9A2-4F04-B2F6-265509ACB3CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D39F2BAA-F9A2-4F04-B2F6-265509ACB3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D39F2BAA-F9A2-4F04-B2F6-265509ACB3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D39F2BAA-F9A2-4F04-B2F6-265509ACB3CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D85D50C-67CD-4FDA-AB71-CE44302A937B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D85D50C-67CD-4FDA-AB71-CE44302A937B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D85D50C-67CD-4FDA-AB71-CE44302A937B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D85D50C-67CD-4FDA-AB71-CE44302A937B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C673D8C3-FE4F-465C-9457-3A9E08ADE305} = {39B49484-CEC6-4651-96DF-68AFE1590A2E}
+		{5072E11C-06EB-40FD-B4C0-6A1B39B1659E} = {DAB2C12C-B8E1-41E8-95C2-F96565AC3C70}
+		{D39F2BAA-F9A2-4F04-B2F6-265509ACB3CB} = {8FA252C9-F19B-4D9D-BE18-F0A93C3143C8}
+		{0D85D50C-67CD-4FDA-AB71-CE44302A937B} = {95A3137E-C2C3-4D8A-AF06-90132F44829D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55DBE199-5033-4095-A89D-B2255A026430}

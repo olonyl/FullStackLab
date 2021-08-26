@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using hey_url_challenge_code_dotnet.Models;
+using UrlShortener.Domain.Entities;
 
 namespace hey_url_challenge_code_dotnet.ViewModels
 {

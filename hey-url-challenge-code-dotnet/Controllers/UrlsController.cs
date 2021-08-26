@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using hey_url_challenge_code_dotnet.Models;
 using hey_url_challenge_code_dotnet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Shyjus.BrowserDetection;
+using UrlShortener.Application.Interface;
+using UrlShortener.Domain.Entities;
 
 namespace HeyUrlChallengeCodeDotnet.Controllers
 {
@@ -12,74 +13,70 @@ namespace HeyUrlChallengeCodeDotnet.Controllers
     public class UrlsController : Controller
     {
         private readonly ILogger<UrlsController> _logger;
-        private static readonly Random getrandom = new Random();
         private readonly IBrowserDetector browserDetector;
+        private readonly IUrlService urlService;
 
-        public UrlsController(ILogger<UrlsController> logger, IBrowserDetector browserDetector)
+        public UrlsController(ILogger<UrlsController> logger, IBrowserDetector browserDetector, IUrlService urlService)
         {
             this.browserDetector = browserDetector;
             _logger = logger;
+            this.urlService = urlService;
         }
 
         public IActionResult Index()
         {
-            var model = new HomeViewModel();
-            model.Urls = new List<Url>
-            {
-                new()
-                {
-                    ShortUrl = "ABCDE",
-                    Count = getrandom.Next(1, 10)
-                },
-                new()
-                {
-                    ShortUrl = "ABCDE",
-                    Count = getrandom.Next(1, 10)
-                },
-                new()
-                {
-                    ShortUrl = "ABCDE",
-                    Count = getrandom.Next(1, 10)
-                },
-            };
+            HomeViewModel model =new HomeViewModel();
             model.NewUrl = new();
+            model.Urls = urlService.GetUrlList();
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult GenerateShortUrl(Url url)
+        {
+            try
+            {
+                this.urlService.GenerateShortUrl(url.OriginalUrl);
+                return PartialView();
+            }
+            catch (Exception ex) {
+                ModelState.AddModelError("OriginalUrl", ex.Message);
+                return PartialView(url);
+            }
+        }
+
+        [HttpGet]
+        [Route("ShowUrls")]
+        public IActionResult ShowUrls() {
+            var urls = this.urlService.GetUrlList();
+            return PartialView(urls);
+        }
+
         [Route("/{url}")]
-        public IActionResult Visit(string url) => new OkObjectResult($"{url}, {this.browserDetector.Browser.OS}, {this.browserDetector.Browser.Name}");
+        public IActionResult Visit(string url)
+        {
+            try
+            {
+                var newUrl = this.urlService.GenerateVisit(url, this.browserDetector.Browser.OS, this.browserDetector.Browser.Name);
+                return Redirect(newUrl.Url.OriginalUrl);
+            }
+            catch (Exception ex) {
+                return NotFound();
+            }
+        }
 
         [Route("urls/{url}")]
-        public IActionResult Show(string url) => View(new ShowViewModel
+        public IActionResult Show(string url)
         {
-            Url = new Url {ShortUrl = url, Count = getrandom.Next(1, 10)},
-            DailyClicks = new Dictionary<string, int>
+            try
             {
-                {"1", 13},
-                {"2", 2},
-                {"3", 1},
-                {"4", 7},
-                {"5", 20},
-                {"6", 18},
-                {"7", 10},
-                {"8", 20},
-                {"9", 15},
-                {"10", 5}
-            },
-            BrowseClicks = new Dictionary<string, int>
-            {
-                { "IE", 13 },
-                { "Firefox", 22 },
-                { "Chrome", 17 },
-                { "Safari", 7 },
-            },
-            PlatformClicks = new Dictionary<string, int>
-            {
-                { "Windows", 13 },
-                { "macOS", 22 },
-                { "Ubuntu", 17 },
-                { "Other", 7 },
+                var dashboard = this.urlService.GetDashboard(url);
+                return View(dashboard);
             }
-        });
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
     }
 }

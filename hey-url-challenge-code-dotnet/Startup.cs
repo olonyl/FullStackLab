@@ -1,10 +1,14 @@
-using HeyUrlChallengeCodeDotnet.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using UrlShortener.Application.Interface;
+using UrlShortener.Application.Services;
+using UrlShortener.Domain.Repositories;
+using UrlShortener.Infrastructure;
+using UrlShortener.Infrastructure.Repositories;
 
 namespace HeyUrlChallengeCodeDotnet
 {
@@ -22,7 +26,14 @@ namespace HeyUrlChallengeCodeDotnet
         {
             services.AddBrowserDetection();
             services.AddControllersWithViews();
-            services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase(databaseName: "HeyUrl"));
+            //  services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(databaseName: "HeyUrl"));
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
+
+            services.AddScoped<IUrlRepository, UrlRepository>();
+            services.AddScoped<IClickRepository, ClickRepository>();
+            services.AddScoped<IUrlService, UrlService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +64,7 @@ namespace HeyUrlChallengeCodeDotnet
             });
 
             using var scope = app.ApplicationServices.CreateScope();
-            var context = scope.ServiceProvider.GetService<ApplicationContext>();
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             context.Database.EnsureCreated();
         }
     }
